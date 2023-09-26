@@ -59,11 +59,13 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
 	```
 	Y luego enviando una petición GET a: http://localhost:8080/blueprints. Rectifique que, como respuesta, se obtenga un objeto jSON con una lista que contenga el detalle de los planos suministados por defecto, y que se haya aplicado el filtrado de puntos correspondiente.
 
+	![img.png](img/answers/readme1.png)
 
-5. Modifique el controlador para que ahora, acepte peticiones GET al recurso /blueprints/{author}, el cual retorne usando una representación jSON todos los planos realizados por el autor cuyo nombre sea {author}. Si no existe dicho autor, se debe responder con el código de error HTTP 404. Para esto, revise en [la documentación de Spring](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html), sección 22.3.2, el uso de @PathVariable. De nuevo, verifique que al hacer una petición GET -por ejemplo- a recurso http://localhost:8080/blueprints/juan, se obtenga en formato jSON el conjunto de planos asociados al autor 'juan' (ajuste esto a los nombres de autor usados en el punto 2).
-
+5. Modifique el controlador para que ahora, acepte peticiones GET al recurso /blueprints/{author}, el cual retorne usando una representación jSON todos los planos realizados por el autor cuyo nombre sea {author}. Si no existe dicho autor, se debe responder con el código de error HTTP 404. Para esto, revise en [la documentación de Spring](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html), sección 22.3.2, el uso de @PathVariable. De nuevo, verifique que al hacer una petición GET -por ejemplo- a recurso http://localhost:8080/blueprints/juan, se obtenga en formato jSON el conjunto de planos asociados al autor 'juan' (ajuste esto a los nombres de autor usados en el punto 2). 
+	
+    ![img.png](img/answers/readme2.png)
 6. Modifique el controlador para que ahora, acepte peticiones GET al recurso /blueprints/{author}/{bpname}, el cual retorne usando una representación jSON sólo UN plano, en este caso el realizado por {author} y cuyo nombre sea {bpname}. De nuevo, si no existe dicho autor, se debe responder con el código de error HTTP 404. 
-
+	![img.png](img/answers/readme3.png)
 
 
 ### Parte II
@@ -92,20 +94,24 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
     cual en este caso debe ser un documento jSON equivalente a la clase
     Cliente (donde en lugar de {ObjetoJSON}, se usará un objeto jSON correspondiente a una nueva orden:
 
-	```	
+	~~~
 	$ curl -i -X POST -HContent-Type:application/json -HAccept:application/json http://URL_del_recurso_ordenes -d '{ObjetoJSON}'
-	```	
+	~~~
 
 	Con lo anterior, registre un nuevo plano (para 'diseñar' un objeto jSON, puede usar [esta herramienta](http://www.jsoneditoronline.org/)):
-	
-
 	Nota: puede basarse en el formato jSON mostrado en el navegador al consultar una orden con el método GET.
-
+ 
+	~~~
+	$ curl -X POST --location "http://localhost:8080/blueprints" -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"author\":\"Rojas\",\"points\":[{\"x\":10,\"y\":0},{\"x\":30,\"y\":20}],\"name\":\"Blueprint 4\"}"
+	~~~
 
 3. Teniendo en cuenta el autor y numbre del plano registrado, verifique que el mismo se pueda obtener mediante una petición GET al recurso '/blueprints/{author}/{bpname}' correspondiente.
-
+	![img.png](img/answers/readme4.png)
 4. Agregue soporte al verbo PUT para los recursos de la forma '/blueprints/{author}/{bpname}', de manera que sea posible actualizar un plano determinado.
-
+	~~~
+	$ curl -X PUT --location "http://localhost:8080/blueprints/Sebas/Blueprint%201" -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"author\":\"Sebas\",\"points\":[{\"x\":0,\"y\":0},{\"x\":0,\"y\":0}],\"name\":\"Blueprint 1\"}"
+	~~~
+ 	![img.png](img/answers/readme5.png)
 
 ### Parte III
 
